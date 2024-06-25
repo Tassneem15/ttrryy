@@ -1,0 +1,29 @@
+name: Build, Run, and Deploy C++ Code
+
+# Trigger the workflow on push or pull request to the master branch
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-run-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        # Check out the master branch
+        ref: master
+
+    - name: Set up environment
+      run: sudo apt-get install -y g++
+
+    - name: Build the code
+      run: g++ -o tictactoe in.cpp
+
+    
