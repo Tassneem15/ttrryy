@@ -26,17 +26,4 @@ jobs:
     - name: Build the code
       run: g++ -o tictactoe in.cpp
 
-    - name: Run the code
-      run: ./tictactoe
-      # If your code requires inputs, you can use echo and pipe the inputs to the executable.
-      # For example: echo "1\n2\n3" | ./tictactoe
-
-    - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/master'
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        echo "<html><body><pre>$(./tictactoe)</pre></body></html>" > index.html
-        git add index.html
-        git commit -m 'Deploy to GitHub Pages'
-        git push origin HEAD:gh-pages
+    
