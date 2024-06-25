@@ -4,10 +4,10 @@ name: Build, Run, and Deploy C++ Codee
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build-run-deploy:
@@ -16,14 +16,4 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        # Check out the master branch
-        ref: master
-
-    - name: Set up environment
-      run: sudo apt-get install -y g++
-
-    - name: Build the code
-      run: g++ -o tictactoe in.cpp
-
-    
+     
