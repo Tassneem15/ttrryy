@@ -1,6 +1,6 @@
-name: Build, Run, and Deploy C++ Codee
+name: Build and Run Tic Tac Toe
 
-# Trigger the workflow on push or pull request to the master branch
+# Trigger the workflow on push or pull request to the main branch
 on:
   push:
     branches:
@@ -10,10 +10,23 @@ on:
       - main
 
 jobs:
-  build-run-deploy:
-    runs-on: ubuntu-latest
+  build-and-run:
+    runs-on: ubuntu-latest  # Run on Ubuntu runners
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-     
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Build Dependencies
+        run: |  # Update package lists and install build tools
+          sudo apt update
+          sudo apt install build-essential  # Installs basic build tools (C++ compiler)
+
+      - name: Build C++ Code
+        run: |  # Replace with your actual build commands
+          g++ -o tictactoe ai.cpp main.cpp mainmenu.cpp mainwindow.cpp sec_player_login.cpp tictactoe.cpp # Example using g++ compiler (replace filenames)
+          # Adjust flags (e.g., -Wall for warnings) based on your project
+
+      - name: Run Tic Tac Toe Game
+        run: |  # Assuming your executable is named tictactoe
+          ./tictactoe
