@@ -18,10 +18,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake g++ make
-      - name: Set up Qt
+      - name: Set up Qt 
         run: |
-          sudo apt-get update    
-          sudo apt-get install -y qt5-default
+         sudo apt-get update
+         sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qt5-qmake qttools5-dev-tools
       - name: Build project
         run: |
           mkdir build
