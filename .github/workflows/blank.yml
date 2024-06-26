@@ -52,12 +52,3 @@ env:
   VALIDATE_CPP: true
   DEFAULT_BRANCH: main
 
-# Add environment variables at the end or within specific jobs
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  VALIDATE_ALL_CODEBASE: true
-  VALIDATE_JAVASCRIPT_ES: true
-  VALIDATE_PYTHON_PYLINT: true
-  VALIDATE_GO: true
-  VALIDATE_CPP: true
-  DEFAULT_BRANCH: main
