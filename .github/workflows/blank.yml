@@ -24,7 +24,7 @@ jobs:
 
       - name: Build C++ Code
         run: |  # Replace with your actual build commands
-          g++ -o ai ai.cpp # Example using g++ compiler (replace filenames)
+          g++ -I ai.h -o ai.cpp # Example using g++ compiler (replace filenames)
           # Adjust flags (e.g., -Wall for warnings) based on your project
 
       - name: Run Tic Tac Toe Game
