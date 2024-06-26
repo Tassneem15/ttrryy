@@ -14,14 +14,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake g++ make
-      - name: Set up Qt 
+
+      - name: Set up Qt
         run: |
-         sudo apt-get update
-         sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qt5-qmake qttools5-dev-tools
+          sudo apt-get update
+          sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qt5-qmake qttools5-dev-tools
+
       - name: Build project
         run: |
           mkdir build
@@ -29,12 +32,30 @@ jobs:
           cmake ..
           make
 
-          env: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-          VALIDATE_ALL_CODEBASE: true 
-          VALIDATE_JAVASCRIPT_ES: true 
-          VALIDATE_PYTHON_PYLINT: true 
-          VALIDATE_GO: true VALIDATE_CPP: true 
-          DEFAULT_BRANCH: main
+  # Add additional jobs here
+  # Example job to run unit tests
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  # You can add additional jobs here, 
-  # for example, a job to run unit tests.
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make qtbase5-dev qtdeclarative5-dev qt5-qmake qttools5-dev-tools
+
+      - name: Run tests
+        run: |
+          cd build
+          make test
+
+# Add environment variables at the end or within specific jobs
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  VALIDATE_ALL_CODEBASE: true
+  VALIDATE_JAVASCRIPT_ES: true
+  VALIDATE_PYTHON_PYLINT: true
+  VALIDATE_GO: true
+  VALIDATE_CPP: true
+  DEFAULT_BRANCH: main
