@@ -29,5 +29,12 @@ jobs:
           cmake ..
           make
 
+          env: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          VALIDATE_ALL_CODEBASE: true 
+          VALIDATE_JAVASCRIPT_ES: true 
+          VALIDATE_PYTHON_PYLINT: true 
+          VALIDATE_GO: true VALIDATE_CPP: true 
+          DEFAULT_BRANCH: main
+
   # You can add additional jobs here, 
   # for example, a job to run unit tests.
