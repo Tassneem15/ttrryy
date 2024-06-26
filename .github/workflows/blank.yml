@@ -9,16 +9,6 @@ on:
       - main
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake g++ make
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -35,3 +25,5 @@ jobs:
           cmake ..
           make
 
+  # You can add additional jobs here, 
+  # for example, a job to run unit tests.
