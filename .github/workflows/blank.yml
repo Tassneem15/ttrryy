@@ -20,6 +20,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake g++ make qtbase5-dev qtdeclarative5-dev qt5-qmake qttools5-dev-tools
 
+      - name: Set up Qt environment
+        run: |
+          echo 'QT_DIR=$(qtchooser -print-env | grep QTTOOLDIR | cut -d= -f2)/..'
+          echo 'export PATH=$QT_DIR/bin:$PATH' >> $GITHUB_ENV
+          echo 'export CMAKE_PREFIX_PATH=$QT_DIR' >> $GITHUB_ENV
+
       - name: Build project
         run: |
           mkdir build
@@ -38,6 +44,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake g++ make qtbase5-dev qtdeclarative5-dev qt5-qmake qttools5-dev-tools
 
+      - name: Set up Qt environment
+        run: |
+          echo 'QT_DIR=$(qtchooser -print-env | grep QTTOOLDIR | cut -d= -f2)/..'
+          echo 'export PATH=$QT_DIR/bin:$PATH' >> $GITHUB_ENV
+          echo 'export CMAKE_PREFIX_PATH=$QT_DIR' >> $GITHUB_ENV
+
       - name: Run tests
         run: |
           cd build
@@ -51,4 +63,3 @@ env:
   VALIDATE_GO: true
   VALIDATE_CPP: true
   DEFAULT_BRANCH: main
-
