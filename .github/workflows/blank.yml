@@ -1,6 +1,5 @@
-name: Build and Run Tic Tac Toe
+name: CI/CD Pipeline
 
-# Trigger the workflow on push or pull request to the main branch
 on:
   push:
     branches:
@@ -10,23 +9,77 @@ on:
       - main
 
 jobs:
-  build-and-run:
-    runs-on: ubuntu-latest  # Run on Ubuntu runners
-
+  setup:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make
 
-      - name: Install Build Dependencies
-        run: |  # Update package lists and install build tools
-          sudo apt update
-          sudo apt install build-essential  # Installs basic build tools (C++ compiler)
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
 
-      - name: Build C++ Code
-        run: |  # Replace with your actual build commands
-          g++ -I ai.h -o ai.cpp # Example using g++ compiler (replace filenames)
-          # Adjust flags (e.g., -Wall for warnings) based on your project
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+      - name: Run unit tests
+        run: |
+          cd build
+          ctest --output-on-failure
 
-      - name: Run Tic Tac Toe Game
-        run: |  # Assuming your executable is named tictactoe
-          ./tictactoe
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+      - name: Deploy application
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+          mkdir -p ~/.ssh
+          ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+          scp -r build/* $SSH_USER@$SSH_HOST:/path/to/deployment/directory
+      - name: Notify deployment success
+        run: |
+          echo "Deployment successful!"
